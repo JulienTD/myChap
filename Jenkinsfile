@@ -77,7 +77,7 @@ pipeline {
       }
       steps {
         sshagent (credentials: ['epitech-global']) {
-          sh "git push git@git.epitech.eu:/florent.poinsard@epitech.eu/NWP_mychap_2018 --force ${env.BRANCH_NAME}:${env.BRANCH_NAME}"
+          sh "git push git@git.epitech.eu:/julien.tauran@epitech.eu/NWP_mychap_2018 --force ${env.BRANCH_NAME}:${env.BRANCH_NAME}"
         }
       }
     }
