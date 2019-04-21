@@ -13,7 +13,10 @@ DIR					=	./src/
 
 SRC_CHAP			=	chap/chap_fill.c \
 						chap/chap_init.c \
-						chap/chap_listen.c
+						chap/chap_listen.c \
+						chap/chap_receive.c \
+						chap/chap_send.c \
+						chap/chap_init_socket.c
 
 SRC_PACKET			=	packet/packet_calculate_checksum.c \
 						packet/packet_configure_dest.c \
@@ -32,7 +35,7 @@ OBJ_MAIN			=	$(SRC_MAIN:.c=.o)
 
 OBJ					=	$(SRCS:.c=.o)
 
-CFLAGS				=	-W -Wall -Wextra -I./include/ -I./lib/include/
+CFLAGS				=	-W -Wall -Wextra -I./include/ -I./lib/include/ -lcrypto
 
 CC					=	gcc
 

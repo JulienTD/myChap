@@ -36,6 +36,5 @@ int main(int ac, char **av)
     }
     if (chap_listen(chap) == false)
         return (84);
-    printf("Good job \n");
     return (0);
 }

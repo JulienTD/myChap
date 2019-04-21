@@ -12,11 +12,10 @@
 
 bool packet_send(int fd, packet_t *packet)
 {
-    if (sendto (fd, packet->datagram, packet->iph->tot_len , \
-                0, (struct sockaddr *) &packet->sin, sizeof(packet->sin)) < 0) {
-        perror("sendto failed");
-    } else {
-        printf ("Packet Send. Length : %d \n" , packet->iph->tot_len);
+    if (sendto(fd, packet->datagram, packet->iph->tot_len, \
+            0, (struct sockaddr *)&packet->sin, sizeof(packet->sin)) < 0) {
+        // printf("[Client] [Error] Failed to send the packet\n");
+        return (false);
     }
     return (true);
 }

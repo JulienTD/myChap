@@ -38,7 +38,6 @@ static bool dispatch_args(chap_t *chap, int i, int ac, char **av)
 {
     if (chap == NULL || i < 0 || i > ac || av == NULL)
         return (false);
-    printf("%s  ->  %s\n", av[i], av[i + 1]);
     if (strcmp(av[i], "-t") == 0 || strcmp(av[i], "--target") == 0)
         return (fill_target(chap, i, av));
     if (strcmp(av[i], "-p") == 0 || strcmp(av[i], "--port") == 0)

@@ -28,7 +28,7 @@ struct pseudo_header
 
 typedef struct packet_s
 {
-    char datagram[4096];
+    char *datagram;
     char *data;
     char *pseudogram;
     struct iphdr *iph;
