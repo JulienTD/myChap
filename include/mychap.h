@@ -28,5 +28,6 @@ bool chap_listen(chap_t *chap);
 bool chap_send(chap_t *chap, char *data);
 char *chap_receive(chap_t *chap);
 bool chap_init_socket(chap_t *chap);
+bool chap_destroy(chap_t *chap);
 
 #endif /* !MYCHAP_H_ */

@@ -15,10 +15,12 @@ static bool init_socket_options(chap_t *chap)
 
     if (setsockopt(chap->fd, SOL_SOCKET, SO_REUSEADDR, \
         &can_be_reused, sizeof(int)) == -1) {
-        printf("[Client] [Warning] Failed to set the socket options (Reuse addr)!\n");
+        printf("[Client] [Warning] Failed to set the socket options ");
+        printf("Reuse addr)!\n");
     }
     if (setsockopt(chap->fd, IPPROTO_IP, IP_HDRINCL, &on, sizeof(on)) == -1) {
-        printf("[Client] [Warning] Failed to set the socket options (HDRINCL)!\n");
+        printf("[Client] [Warning] Failed to set the socket options ");
+        printf("HDRINCL)!\n");
     }
     return (true);
 }
@@ -35,8 +37,8 @@ bool chap_init_socket(chap_t *chap)
         return (false);
     }
     init_socket_options(chap);
-    socklen = (socklen_t) sizeof(chap->addr);
-    if (bind(chap->fd, (struct sockaddr*) &chap->addr, socklen) == -1) {
+    socklen = (socklen_t)sizeof(chap->addr);
+    if (bind(chap->fd, (struct sockaddr *) &chap->addr, socklen) == -1) {
         printf("[Client] [Error] Failed to bind the socket !\n");
         return (false);
     }

@@ -16,7 +16,8 @@ SRC_CHAP			=	chap/chap_fill.c \
 						chap/chap_listen.c \
 						chap/chap_receive.c \
 						chap/chap_send.c \
-						chap/chap_init_socket.c
+						chap/chap_init_socket.c \
+						chap/chap_destroy.c
 
 SRC_PACKET			=	packet/packet_calculate_checksum.c \
 						packet/packet_configure_dest.c \
@@ -24,7 +25,8 @@ SRC_PACKET			=	packet/packet_calculate_checksum.c \
 						packet/packet_configure_src.c \
 						packet/packet_configure_udp.c \
 						packet/packet_init.c \
-						packet/packet_send.c
+						packet/packet_send.c \
+						packet/packet_destroy.c
 
 SRCS				=	$(addprefix $(DIR), $(SRC_CHAP)) \
 						$(addprefix $(DIR), $(SRC_PACKET))

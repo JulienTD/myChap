@@ -48,5 +48,6 @@ bool packet_configure_dest(packet_t *packet, char *dest_addr, int dest_port);
 bool packet_send(int fd, packet_t *packet);
 bool packet_calculate_checksum(packet_t *packet);
 bool packet_configure_ip(packet_t *packet);
+bool packet_destroy(packet_t *packet);
 
 #endif /* !PACKET_H_ */

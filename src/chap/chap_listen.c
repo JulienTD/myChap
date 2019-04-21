@@ -18,6 +18,14 @@
 #include <stdio.h>
 #include <openssl/sha.h>
 
+/*
+    for (char *data = chap_receive(chap); data != NULL; data = chap_receive(chap)) {
+        if (strlen(data + sizeof(struct iphdr) + sizeof(struct udphdr)) != 10)
+            continue;
+        curr_data = data;
+        break;
+    }
+*/
 static char *sha256(const char *str)
 {
     unsigned char hash[SHA256_DIGEST_LENGTH] = {0};
@@ -36,11 +44,22 @@ static char *sha256(const char *str)
     return (output_buffer);
 }
 
+static char *concat_password(chap_t *chap, char *serv_pass)
+{
+    char *final_password = NULL;
+
+    final_password = calloc(strlen(chap->password) + 11, sizeof(char));
+    if (final_password == NULL)
+        return (NULL);
+    final_password = strcat(final_password, \
+                (serv_pass + sizeof(struct iphdr) + sizeof(struct udphdr)));
+    final_password = strcat(final_password, chap->password);
+    return (final_password);
+}
 
 bool chap_listen(chap_t *chap)
 {
     char *curr_data = NULL;
-    char *final_password = NULL;
 
     if (chap_init_socket(chap) == false)
         return (false);
@@ -48,22 +67,16 @@ bool chap_listen(chap_t *chap)
         printf("No such hostname: '%s'\n", chap->target);
         return (false);
     }
-    for (char *data = chap_receive(chap); data != NULL; data = chap_receive(chap)) {
-        if (strlen(data + sizeof(struct iphdr) + sizeof(struct udphdr)) != 10)
-            continue;
-        curr_data = data;
-        break;
-    }
-    final_password = calloc(strlen(chap->password) + 11, sizeof(char));
-    final_password = strcat(final_password, (curr_data + sizeof(struct iphdr) + sizeof(struct udphdr)));
-    final_password = strcat(final_password, chap->password);
-    chap_send(chap, sha256(final_password));
-    char *data = chap_receive(chap);
-    data = chap_receive(chap);
-    if (strcmp(data + sizeof(struct iphdr) + sizeof(struct udphdr), "KO") == 0) {
+    curr_data = chap_receive(chap);
+    curr_data = chap_receive(chap);
+    chap_send(chap, sha256(concat_password(chap, curr_data)));
+    curr_data = chap_receive(chap);
+    curr_data = chap_receive(chap);
+    if (strcmp(curr_data + sizeof(struct iphdr) + \
+        sizeof(struct udphdr), "KO") == 0) {
         printf("KO\n");
-        return (true);
-    }
-    printf("Secret: '%s'\n", data + sizeof(struct iphdr) + sizeof(struct udphdr));
+    } else
+        printf("Secret: '%s'\n", curr_data + \
+                            sizeof(struct iphdr) + sizeof(struct udphdr));
     return (true);
 }

@@ -26,5 +26,6 @@ bool chap_send(chap_t *chap, char *data)
         return (false);
     if (packet_send(chap->fd, packet) == false)
         return (false);
+    packet_destroy(packet);
     return (true);
 }

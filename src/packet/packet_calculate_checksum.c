@@ -19,7 +19,7 @@ static unsigned short csum(unsigned short *ptr, int nbytes)
     }
     if (nbytes == 1) {
         oddbyte = 0;
-        *((u_char*)&oddbyte) = *(u_char*)ptr;
+        *((u_char *)&oddbyte) = *(u_char *)ptr;
         sum += oddbyte;
     }
     sum = (sum >> 16) + (sum & 0xffff);
@@ -45,10 +45,10 @@ bool packet_calculate_checksum(packet_t *packet)
     psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + \
                             strlen(packet->data);
     packet->pseudogram = malloc(psize);
-    memcpy(packet->pseudogram, (char*)&packet->psh, \
+    memcpy(packet->pseudogram, (char *)&packet->psh, \
             sizeof(struct pseudo_header));
     memcpy(packet->pseudogram + sizeof(struct pseudo_header), packet->udph, \
             sizeof(struct udphdr) + strlen(packet->data));
-    packet->udph->check = csum((unsigned short*)packet->pseudogram, psize);
+    packet->udph->check = csum((unsigned short *)packet->pseudogram, psize);
     return (true);
 }

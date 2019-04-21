@@ -41,8 +41,8 @@ bool packet_configure_ip(packet_t *packet)
     packet->iph->ihl = 5;
     packet->iph->version = 4;
     packet->iph->tos = 0;
-    packet->iph->tot_len = sizeof (struct iphdr) + \
-                            sizeof (struct udphdr) + strlen(packet->data);
+    packet->iph->tot_len = sizeof(struct iphdr) + \
+                            sizeof(struct udphdr) + strlen(packet->data);
     packet->iph->id = htonl(54321); // TODO: Generate an id
     packet->iph->frag_off = 0;
     packet->iph->ttl = 255;
