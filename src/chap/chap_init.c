@@ -22,8 +22,8 @@ chap_t *chap_init(void)
     chap->target = NULL;
     chap->port = 0;
     chap->fd = -1;
-    chap->addr.sin_family = AF_INET;
-    chap->addr.sin_port = htons(25567);
-    chap->addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    // chap->addr.sin_family = AF_INET;
+    // chap->addr.sin_port = htons(25567);
+    // chap->addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     return (chap);
 }

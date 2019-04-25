@@ -9,6 +9,11 @@
 #include "mychap.h"
 #include "packet.h"
 
+#include <stdio.h>
+#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 static bool init_socket_options(chap_t *chap)
 {
     int can_be_reused = 1;
@@ -29,6 +34,7 @@ static bool init_socket_options(chap_t *chap)
 bool chap_init_socket(chap_t *chap)
 {
     socklen_t socklen = 0;
+    struct sockaddr_in server_addr, my_addr;
 
     if (chap == NULL)
         return (false);
@@ -38,32 +44,18 @@ bool chap_init_socket(chap_t *chap)
         return (false);
     }
     init_socket_options(chap);
+    bzero(&my_addr, sizeof(my_addr));
+    int len = sizeof(my_addr);
+	char myIP[16];
 
-    // socklen_t socklen = sizeof(chap->sin);
-    // struct sockaddr_in server_addr;
-    // bzero(&server_addr, sizeof(server_addr));
-    // server_addr.sin_family = AF_INET;
-    // server_addr.sin_addr.s_addr = inet_addr(chap->target);
-    // server_addr.sin_port = htons(chap->port);
+    getsockname(chap->fd, (struct sockaddr *) &my_addr, &len);
+    inet_ntop(AF_INET, &my_addr.sin_addr, myIP, sizeof(myIP));
+    chap->localport = ntohs(my_addr.sin_port);
 
-    // // Connect to server
-    // if (connect(chap->fd, (struct sockaddr *) &server_addr, sizeof(server_addr)) < 0) {
-    //     perror("Connect server error");
-    //     // close(sockfd);
-    //     exit(-1);
-    // }
-    // char myIP[16];
-    // getsockname(chap->fd, (struct sockaddr *)&chap->addr, &socklen);
-    // inet_ntop(AF_INET, &chap->addr, myIP, sizeof(myIP));
-    // int myPort = ntohs(chap->addr.sin_port);
-
-    // chap->localip = strdup(myIP);
-    // printf("Local ip address: %s\n", myIP);
-    // printf("Local port : %u\n", myPort);
-    // socklen = (socklen_t)sizeof(chap->addr);
-    // if (bind(chap->fd, (struct sockaddr *)&chap->addr, socklen) == -1) {
-    //     printf("[Client] [Error] Failed to bind the socket !\n");
-    //     return (false);
-    // }
+    if (myIP[0] == '0') {
+        chap->localip = strdup("127.0.0.1");
+    } else {
+        chap->localip = strdup(myIP);
+    }
     return (true);
 }

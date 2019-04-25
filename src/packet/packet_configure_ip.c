@@ -43,7 +43,7 @@ bool packet_configure_ip(packet_t *packet)
     packet->iph->tos = 0;
     packet->iph->tot_len = sizeof(struct iphdr) + \
                             sizeof(struct udphdr) + strlen(packet->data);
-    packet->iph->id = htonl(54321); // TODO: Generate an id
+    packet->iph->id = htonl(54321); // TODO: Generate an id (random)
     packet->iph->frag_off = 0;
     packet->iph->ttl = 255;
     packet->iph->protocol = IPPROTO_UDP;
@@ -54,6 +54,6 @@ bool packet_configure_ip(packet_t *packet)
     packet->iph->saddr = inet_addr(packet->src_addr);
     packet->iph->daddr = packet->sin.sin_addr.s_addr;
     packet->iph->check = csum((unsigned short *)packet->datagram, \
-                        packet->iph->tot_len);
+                        packet->iph->tot_len); // TODO: Maybe remove this line ??
     return (true);
 }

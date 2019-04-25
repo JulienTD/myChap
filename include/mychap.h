@@ -19,9 +19,10 @@ typedef struct chap_s
     int port;
     char *password;
     int fd;
-    struct sockaddr_in addr;
-    struct sockaddr *sin;
+    // struct sockaddr_in addr;
+    // struct sockaddr *sin;
     char *localip;
+    int localport;
 } chap_t;
 
 chap_t *chap_init(void);
