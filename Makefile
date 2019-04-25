@@ -28,8 +28,11 @@ SRC_PACKET			=	packet/packet_calculate_checksum.c \
 						packet/packet_send.c \
 						packet/packet_destroy.c
 
+SRC_UTILS			=	utils/hostname_to_ip.c
+
 SRCS				=	$(addprefix $(DIR), $(SRC_CHAP)) \
-						$(addprefix $(DIR), $(SRC_PACKET))
+						$(addprefix $(DIR), $(SRC_PACKET)) \
+						$(addprefix $(DIR), $(SRC_UTILS))
 
 SRC_MAIN			=	$(addprefix $(DIR), $(SRC))
 

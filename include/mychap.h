@@ -20,6 +20,8 @@ typedef struct chap_s
     char *password;
     int fd;
     struct sockaddr_in addr;
+    struct sockaddr *sin;
+    char *localip;
 } chap_t;
 
 chap_t *chap_init(void);
@@ -29,5 +31,5 @@ bool chap_send(chap_t *chap, char *data);
 char *chap_receive(chap_t *chap);
 bool chap_init_socket(chap_t *chap);
 bool chap_destroy(chap_t *chap);
-
+char *hostname_to_ip(char *hostname);
 #endif /* !MYCHAP_H_ */

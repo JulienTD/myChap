@@ -18,14 +18,6 @@
 #include <stdio.h>
 #include <openssl/sha.h>
 
-/*
-    for (char *data = chap_receive(chap); data != NULL; data = chap_receive(chap)) {
-        if (strlen(data + sizeof(struct iphdr) + sizeof(struct udphdr)) != 10)
-            continue;
-        curr_data = data;
-        break;
-    }
-*/
 static char *sha256(const char *str)
 {
     unsigned char hash[SHA256_DIGEST_LENGTH] = {0};
@@ -51,8 +43,7 @@ static char *concat_password(chap_t *chap, char *serv_pass)
     final_password = calloc(strlen(chap->password) + 11, sizeof(char));
     if (final_password == NULL)
         return (NULL);
-    final_password = strcat(final_password, \
-                (serv_pass + sizeof(struct iphdr) + sizeof(struct udphdr)));
+    final_password = strcat(final_password, serv_pass);
     final_password = strcat(final_password, chap->password);
     return (final_password);
 }
@@ -64,12 +55,13 @@ bool chap_listen(chap_t *chap)
     if (chap_init_socket(chap) == false)
         return (false);
     if (chap_send(chap, "client hello") == false) {
-        printf("No such hostname: '%s'\n", chap->target);
+        printf("KO\n");
         return (false);
     }
     curr_data = chap_receive(chap);
     curr_data = chap_receive(chap);
-    chap_send(chap, sha256(concat_password(chap, curr_data)));
+    chap_send(chap, sha256(concat_password(chap, curr_data + \
+                            sizeof(struct iphdr) + sizeof(struct udphdr))));
     curr_data = chap_receive(chap);
     curr_data = chap_receive(chap);
     if (strcmp(curr_data + sizeof(struct iphdr) + \

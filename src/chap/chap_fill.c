@@ -14,7 +14,11 @@ static bool fill_target(chap_t *chap, int i, char **av)
 {
     if (chap == NULL || av == NULL)
         return (false);
-    chap->target = strdup(av[i + 1]);
+    if (hostname_to_ip(av[i + 1]) == NULL) {
+        printf("No such hostname: '%s'\n", av[i + 1]);
+        exit(84);
+    }
+    chap->target = strdup(hostname_to_ip(av[i + 1]));
     return (true);
 }
 
