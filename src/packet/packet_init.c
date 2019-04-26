@@ -14,8 +14,8 @@ static bool init_packet_variables(packet_t *packet)
     packet->pseudogram = NULL;
     packet->iph = NULL;
     packet->udph = NULL;
-    packet->src_addr = NULL;
-    packet->src_port = 0;
+    // packet->src_addr = NULL;
+    // packet->src_port = 0;
     packet->dest_addr = NULL;
     packet->dest_port = 0;
     return (true);

@@ -44,12 +44,13 @@ bool chap_init_socket(chap_t *chap)
         return (false);
     }
     init_socket_options(chap);
-    bzero(&my_addr, sizeof(my_addr));
-    int len = sizeof(my_addr);
+    int len = sizeof(chap->client);
+    getsockname(chap->fd, (struct sockaddr *) &chap->client, &len);
+    // bzero(&my_addr, sizeof(my_addr));
 	char myIP[16];
 
-    getsockname(chap->fd, (struct sockaddr *) &my_addr, &len);
-    inet_ntop(AF_INET, &my_addr.sin_addr, myIP, sizeof(myIP));
+    // getsockname(chap->fd, (struct sockaddr *) &my_addr, &len);
+    inet_ntop(AF_INET, &chap->client.sin_addr, myIP, sizeof(myIP));
     chap->localport = ntohs(my_addr.sin_port);
 
     if (myIP[0] == '0') {

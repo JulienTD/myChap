@@ -16,6 +16,7 @@
 #include <netinet/udp.h>
 #include <netinet/ip.h>
 #include <stdbool.h>
+#include "mychap.h"
 
 struct pseudo_header
 {
@@ -33,18 +34,19 @@ typedef struct packet_s
     char *pseudogram;
     struct iphdr *iph;
     struct udphdr *udph;
-    struct sockaddr_in sin;
+    struct sockaddr_in server;
+    struct sockaddr_in client;
     struct pseudo_header psh;
-    char *src_addr;
-    int src_port;
+    // char *src_addr;
+    // int src_port;
     char *dest_addr;
     int dest_port;
 } packet_t;
 
 bool packet_configure_udp(packet_t *packet);
 packet_t *packet_init(char *data);
-bool packet_configure_src(packet_t *packet, char *src_addr, int src_port);
-bool packet_configure_dest(packet_t *packet, char *dest_addr, int dest_port);
+bool packet_configure_src(packet_t *packet, chap_t *chap, char *src_addr, int src_port);
+bool packet_configure_dest(packet_t *packet, chap_t *chap, char *dest_addr, int dest_port);
 bool packet_send(int fd, packet_t *packet);
 bool packet_calculate_checksum(packet_t *packet);
 bool packet_configure_ip(packet_t *packet);

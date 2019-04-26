@@ -14,9 +14,10 @@ bool chap_send(chap_t *chap, char *data)
 
     if (packet == NULL)
         return (false);
-    if (packet_configure_src(packet, chap->localip, chap->localport) == false)
-        return (false);
-    if (packet_configure_dest(packet, chap->target, chap->port) == false)
+    packet->client = chap->client;
+    // if (packet_configure_src(packet, chap, chap->localip, chap->localport) == false)
+    //     return (false);
+    if (packet_configure_dest(packet, chap, chap->target, chap->port) == false)
         return (false);
     if (packet_configure_ip(packet) == false)
         return (false);

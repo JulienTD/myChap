@@ -21,6 +21,7 @@ typedef struct chap_s
     int fd;
     // struct sockaddr_in addr;
     // struct sockaddr *sin;
+    struct sockaddr_in client;
     char *localip;
     int localport;
 } chap_t;

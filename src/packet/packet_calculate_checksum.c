@@ -32,23 +32,24 @@ static unsigned short csum(unsigned short *ptr, int nbytes)
 //        (The data must be set before this function)
 bool packet_calculate_checksum(packet_t *packet)
 {
-    int psize = 0;
+    // int psize = 0;
 
-    if (packet == NULL)
-        return (false);
-    packet->psh.source_address = packet->iph->saddr;
-    packet->psh.dest_address = packet->sin.sin_addr.s_addr;
-    packet->psh.placeholder = 0;
-    packet->psh.protocol = IPPROTO_UDP;
-    packet->psh.udp_length = htons(sizeof(struct udphdr) + \
-                            strlen(packet->data));
-    psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + \
-                            strlen(packet->data);
-    packet->pseudogram = malloc(psize);
-    memcpy(packet->pseudogram, (char *)&packet->psh, \
-            sizeof(struct pseudo_header));
-    memcpy(packet->pseudogram + sizeof(struct pseudo_header), packet->udph, \
-            sizeof(struct udphdr) + strlen(packet->data));
-    packet->udph->check = csum((unsigned short *)packet->pseudogram, psize);
+    // if (packet == NULL)
+    //     return (false);
+    // packet->psh.source_address = packet->iph->saddr;
+    // packet->psh.dest_address = packet->server.sin_addr.s_addr;
+    // packet->psh.placeholder = 0;
+    // packet->psh.protocol = IPPROTO_UDP;
+    // packet->psh.udp_length = htons(sizeof(struct udphdr) + \
+    //                         strlen(packet->data));
+    // psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + \
+    //                         strlen(packet->data);
+    // packet->pseudogram = malloc(psize);
+    // memcpy(packet->pseudogram, (char *)&packet->psh, \
+    //         sizeof(struct pseudo_header));
+    // memcpy(packet->pseudogram + sizeof(struct pseudo_header), packet->udph, \
+    //         sizeof(struct udphdr) + strlen(packet->data));
+    // packet->udph->check = csum((unsigned short *)packet->pseudogram, psize);
+    packet->udph->check = 0;
     return (true);
 }

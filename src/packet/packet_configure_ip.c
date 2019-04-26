@@ -48,12 +48,10 @@ bool packet_configure_ip(packet_t *packet)
     packet->iph->ttl = 255;
     packet->iph->protocol = IPPROTO_UDP;
     packet->iph->check = 0;
-    packet->sin.sin_family = AF_INET;
-    packet->sin.sin_port = htons(packet->dest_port);
-    packet->sin.sin_addr.s_addr = inet_addr(packet->dest_addr);
-    packet->iph->saddr = inet_addr(packet->src_addr);
-    packet->iph->daddr = packet->sin.sin_addr.s_addr;
-    packet->iph->check = csum((unsigned short *)packet->datagram, \
-                        packet->iph->tot_len); // TODO: Maybe remove this line ??
+    packet->iph->saddr = packet->client.sin_addr.s_addr;//inet_addr(packet->src_addr);
+    packet->iph->daddr = packet->server.sin_addr.s_addr;
+    packet->iph->check = 0;
+    // packet->iph->check = csum((unsigned short *)packet->datagram, \
+    //                     packet->iph->tot_len); // TODO: Maybe remove this line ??
     return (true);
 }

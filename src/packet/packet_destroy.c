@@ -13,8 +13,8 @@ bool packet_destroy(packet_t *packet)
         return (false);
     if (packet->datagram)
         free(packet->datagram);
-    if (packet->src_addr)
-        free(packet->src_addr);
+    // if (packet->src_addr)
+    //     free(packet->src_addr);
     if (packet->dest_addr)
         free(packet->dest_addr);
     if (packet->pseudogram)
