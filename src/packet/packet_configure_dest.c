@@ -12,7 +12,7 @@
 #include <string.h>
 #include "packet.h"
 
-bool packet_configure_dest(packet_t *packet, chap_t *chap, char *dest_addr, int dest_port)
+bool packet_configure_dest(packet_t *packet, char *dest_addr, int dest_port)
 {
     if (packet == NULL || dest_addr == NULL || dest_port < 0)
         return (false);

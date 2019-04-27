@@ -59,10 +59,8 @@ bool chap_listen(chap_t *chap)
         return (false);
     }
     curr_data = chap_receive(chap);
-    // curr_data = chap_receive(chap);
     chap_send(chap, sha256(concat_password(chap, curr_data + \
                             sizeof(struct iphdr) + sizeof(struct udphdr))));
-    // curr_data = chap_receive(chap);
     curr_data = chap_receive(chap);
     if (strcmp(curr_data + sizeof(struct iphdr) + \
         sizeof(struct udphdr), "KO") == 0) {

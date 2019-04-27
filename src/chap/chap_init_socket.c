@@ -34,7 +34,6 @@ static bool init_socket_options(chap_t *chap)
 bool chap_init_socket(chap_t *chap)
 {
     socklen_t socklen = 0;
-    struct sockaddr_in server_addr, my_addr;
 
     if (chap == NULL)
         return (false);
@@ -44,19 +43,7 @@ bool chap_init_socket(chap_t *chap)
         return (false);
     }
     init_socket_options(chap);
-    int len = sizeof(chap->client);
-    getsockname(chap->fd, (struct sockaddr *) &chap->client, &len);
-    // bzero(&my_addr, sizeof(my_addr));
-	char myIP[16];
-
-    // getsockname(chap->fd, (struct sockaddr *) &my_addr, &len);
-    inet_ntop(AF_INET, &chap->client.sin_addr, myIP, sizeof(myIP));
-    chap->localport = ntohs(my_addr.sin_port);
-
-    if (myIP[0] == '0') {
-        chap->localip = strdup("127.0.0.1");
-    } else {
-        chap->localip = strdup(myIP);
-    }
+    socklen = sizeof(chap->client);
+    getsockname(chap->fd, (struct sockaddr *)&chap->client, &socklen);
     return (true);
 }

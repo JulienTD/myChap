@@ -22,7 +22,6 @@ SRC_CHAP			=	chap/chap_fill.c \
 SRC_PACKET			=	packet/packet_calculate_checksum.c \
 						packet/packet_configure_dest.c \
 						packet/packet_configure_ip.c \
-						packet/packet_configure_src.c \
 						packet/packet_configure_udp.c \
 						packet/packet_init.c \
 						packet/packet_send.c \

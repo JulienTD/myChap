@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 #include "mychap.h"
 
 static bool fill_target(chap_t *chap, int i, char **av)
