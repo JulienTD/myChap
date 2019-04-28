@@ -30,4 +30,5 @@ char *chap_receive(chap_t *chap);
 bool chap_init_socket(chap_t *chap);
 bool chap_destroy(chap_t *chap);
 char *hostname_to_ip(char *hostname);
+
 #endif /* !MYCHAP_H_ */
