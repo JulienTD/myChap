@@ -22,7 +22,7 @@ char *chap_receive(chap_t *chap)
         buffer[size] = '\0';
         packet_port = ntohs(((struct udphdr *)(buffer + \
                             sizeof(struct iphdr)))->dest);
-        if (packet_port == 17)
+        if (packet_port == ntohs(chap->client.sin_port))
             return (buffer);
         free(buffer);
     }

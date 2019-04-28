@@ -11,7 +11,7 @@
 #include "mychap.h"
 #include "packet.h"
 
-static void printUsage(void)
+static void print_usage(void)
 {
     printf("./client [target] [port] [password]\n");
     printf("-t (or --target) followed by the target of ");
@@ -26,12 +26,12 @@ int main(int ac, char **av)
     chap_t *chap = NULL;
 
     if (ac != 7) {
-        printUsage();
+        print_usage();
         return (84);
     }
     chap = chap_fill(ac, av);
     if (chap == NULL) {
-        printUsage();
+        print_usage();
         return (84);
     }
     if (chap_listen(chap) == false) {
